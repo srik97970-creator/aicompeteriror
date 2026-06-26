@@ -8,7 +8,8 @@
     "dev-frontend": "npm run dev --prefix frontend",
     "dev": "node free-ports.js && concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
     "start-backend": "npm start --prefix backend",
-    "start-frontend": "npm run build --prefix frontend && npm run preview --prefix frontend"
+    "start-frontend": "npm run build --prefix frontend && npm run preview --prefix frontend",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
