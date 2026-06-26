@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-slate-950: var(--slate-950);
+  --color-slate-900: var(--slate-900);
+  --color-slate-850: var(--slate-850);
+  --color-slate-800: var(--slate-800);
+  --color-slate-550: var(--slate-550);
+  --color-slate-500: var(--slate-500);
+  --color-slate-400: var(--slate-400);
+  --color-slate-350: var(--slate-350);
+  --color-slate-200: var(--slate-200);
+  --color-slate-100: var(--slate-100);
+}
+
+:root {
+  /* Light Mode Colors */
+  --slate-950: #f8fafc;
+  --slate-900: #ffffff;
+  --slate-850: #f1f5f9;
+  --slate-800: #e2e8f0;
+  --slate-550: #64748b;
+  --slate-500: #64748b;
+  --slate-400: #475569;
+  --slate-350: #334155;
+  --slate-200: #1e293b;
+  --slate-100: #0f172a;
+  
+  --scrollbar-track: rgba(241, 245, 249, 0.5);
+  --scrollbar-thumb: rgba(148, 163, 184, 0.4);
+}
+
+.dark {
+  /* Dark Mode Colors */
+  --slate-950: #0f172a;
+  --slate-900: #1e293b;
+  --slate-850: #1e293b;
+  --slate-800: #1e293b;
+  --slate-550: #64748b;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-350: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-100: #f8fafc;
+  
+  --scrollbar-track: rgba(15, 23, 42, 0.5);
+  --scrollbar-thumb: rgba(148, 163, 184, 0.3);
+}
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans antialiased transition-colors duration-300;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb);
+}
+
+/* Print CSS Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-card {
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    color: black !important;
+    background: white !important;
+  }
+}

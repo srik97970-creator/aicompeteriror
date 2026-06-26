@@ -1,0 +1,84 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  name       String
+  email      String       @unique
+  password   String       // Hashed password
+  role       String       @default("sales_staff") // admin, sales_staff
+  createdAt  DateTime     @default(now()) @map("created_at")
+  comparisons Comparison[]
+
+  @@map("users")
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  name      String
+  category  String
+  features  String   // Text block containing features description
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("products")
+}
+
+model Comparison {
+  id                   Int        @id @default(autoincrement())
+  userId               Int        @map("user_id")
+  competitorProduct    String     @map("competitor_product")
+  competitorBrand      String?    @map("competitor_brand")
+  competitorFeatures   String?    @map("competitor_features")
+  customerRequirements String?    @map("customer_requirements")
+  ourProduct           String     @map("our_product")
+  ourFeatures          String?    @map("our_features")
+  generatedOutput      String     @map("generated_output") // Stores the JSON output brief
+  rating               Int?       // Calculated average rating or single feedback rating
+  createdAt            DateTime   @default(now()) @map("created_at")
+  user                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feedbacks            Feedback[]
+
+  @@map("comparisons")
+}
+
+model Feedback {
+  id           Int        @id @default(autoincrement())
+  comparisonId Int        @map("comparison_id")
+  rating       Int
+  comment      String?
+  createdAt    DateTime   @default(now()) @map("created_at")
+  comparison   Comparison @relation(fields: [comparisonId], references: [id], onDelete: Cascade)
+
+  @@map("feedback")
+}
+
+model Template {
+  id                   Int      @id @default(autoincrement())
+  name                 String   @unique
+  competitorProduct    String   @map("competitor_product")
+  competitorBrand      String?  @map("competitor_brand")
+  competitorFeatures   String?  @map("competitor_features")
+  customerRequirements String?  @map("customer_requirements")
+  ourProduct           String   @map("our_product")
+  ourFeatures          String?  @map("our_features")
+  additionalNotes      String?  @map("additional_notes")
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  @@map("templates")
+}
+
+model AIPrompt {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  systemPrompt String   @map("system_prompt")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("ai_prompts")
+}
