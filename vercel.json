@@ -1,4 +1,11 @@
 {
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/_/backend/api/$1"
+    }
+  ],
   "experimentalServices": {
     "frontend": {
       "root": "frontend",
